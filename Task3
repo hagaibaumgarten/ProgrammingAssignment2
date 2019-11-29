@@ -31,19 +31,23 @@
         "colab_type": "code",
         "colab": {
           "base_uri": "https://localhost:8080/",
-          "height": 340
+          "height": 51
         },
-        "outputId": "b7af4a23-fbd0-4bd9-ddce-6a8602a9e8ed"
+        "outputId": "720c10bd-3458-47f7-e625-f499edf37110"
       },
       "source": [
         "import re\n",
-        "text1 = {1: 'To Sherlock Holmes1 she is always the woman.', 2:'I have seldom heard him mention her under any other name.'}\n",
+        "text1 = {1: 'To Sherlock Holmes1 sHe is always the woman.', 2:'I have seldom heard him mention her under any other name.'}\n",
         "for row in text1:\n",
         "  wordlist = text1[row].split()\n",
-        "  for word in wordlist:\n",
-        "    clean=re.search('[A-Z]', word)\n",
-        "    print(bool(clean))\n",
-        "  #clean = [word for word in wordlist if re.search('1', word) != 'None']\n",
+        "  clean=[word for word in wordlist if (bool(re.match('[A-Z]', word)) == False and len(word)>2)]\n",
+        "  print(clean)\n",
+        "  \n",
+        "  # for word in wordlist:\n",
+        "    # clean=re.search('[A-Z]', word)\n",
+        "    # print(bool(clean))\n",
+        "\n",
+        "  #clean = [word for word in wordlist if re.search('1', word) == 'None']\n",
         "  # print(clean)\n",
         "  # for word in wordlist:\n",
         "    # print(word)\n",
@@ -53,30 +57,13 @@
         "  # print(row)\n",
         "  # print(text1[row])\n"
       ],
-      "execution_count": 107,
+      "execution_count": 136,
       "outputs": [
         {
           "output_type": "stream",
           "text": [
-            "True\n",
-            "True\n",
-            "True\n",
-            "False\n",
-            "False\n",
-            "False\n",
-            "False\n",
-            "False\n",
-            "True\n",
-            "False\n",
-            "False\n",
-            "False\n",
-            "False\n",
-            "False\n",
-            "False\n",
-            "False\n",
-            "False\n",
-            "False\n",
-            "False\n"
+            "['sHe', 'always', 'the', 'woman.']\n",
+            "['have', 'seldom', 'heard', 'him', 'mention', 'her', 'under', 'any', 'other', 'name.']\n"
           ],
           "name": "stdout"
         }
@@ -94,7 +81,7 @@
         "\n",
         "1.   Use lower() and split() functions in order to insert the words into list and separate\n",
         "2.   Input: text1 (dictionary of strings)\n",
-        "3.   Output: text2 (dictionary of words per each line\n",
+        "3.   Output: text2 (dictionary of key is tuple of line # and word # and values are words (keep both clean and dirty words but mark them)\n",
         "\n",
         "\n",
         "\n",
