@@ -3,9 +3,8 @@
   "nbformat_minor": 0,
   "metadata": {
     "colab": {
-      "name": "Untitled1.ipynb",
+      "name": "Task3",
       "provenance": [],
-      "collapsed_sections": [],
       "include_colab_link": true
     },
     "kernelspec": {
@@ -27,69 +26,102 @@
     {
       "cell_type": "code",
       "metadata": {
-        "id": "FnsQ2qaMIONH",
+        "id": "IMsyazBaZJGt",
         "colab_type": "code",
-        "colab": {
-          "base_uri": "https://localhost:8080/",
-          "height": 51
-        },
-        "outputId": "720c10bd-3458-47f7-e625-f499edf37110"
+        "colab": {}
       },
       "source": [
         "import re\n",
-        "text1 = {1: 'To Sherlock Holmes1 sHe is always the woman.', 2:'I have seldom heard him mention her under any other name.'}\n",
-        "for row in text1:\n",
-        "  wordlist = text1[row].split()\n",
-        "  clean=[word for word in wordlist if (bool(re.match('[A-Z]', word)) == False and len(word)>2)]\n",
-        "  print(clean)\n",
-        "  \n",
-        "  # for word in wordlist:\n",
-        "    # clean=re.search('[A-Z]', word)\n",
-        "    # print(bool(clean))\n",
+        "class SpellChecker:\n",
+        "  def __init__(self, input_type=\"file\", typo_count=20, name_ignore=True):\n",
+        "      self.input_type = input_type\n",
+        "      self.typo_count = typo_count\n",
+        "      self.name_ignore = name_ignore\n",
         "\n",
-        "  #clean = [word for word in wordlist if re.search('1', word) == 'None']\n",
-        "  # print(clean)\n",
-        "  # for word in wordlist:\n",
-        "    # print(word)\n",
+        "  def rowparser(self, text):\n",
+        "    word_dict = {} # create an empty dictionary \n",
         "\n",
-        "    # [\n",
+        "    for row_num, sentence in enumerate(text): #enumerate(text) creates a list of tuples of the form [(1, <string in row1>),(2, <string in row2>)]\n",
+        "      words_list = sentence.split()\n",
+        "      for word_num, word in enumerate(words_list):\n",
+        "        dispo = True\n",
+        "        match_word = re.search('^[a-z]+$', word)\n",
+        "        match_cap = re.match('[A-Z]', word)\n",
+        "        #  need to allow '.' at the end of word as exception\n",
         "\n",
-        "  # print(row)\n",
-        "  # print(text1[row])\n"
+        "        if len(word)<=2: # can usae 'or' here for better performance\n",
+        "          dispo = False\n",
+        "        elif bool(match_word)==False:\n",
+        "          dispo = False\n",
+        "        elif self.name_ignore == True and word_num>0 and bool(match_cap)==True:\n",
+        "            dispo = False\n",
+        "        \n",
+        "      \n",
+        "        word_and_dispo = (word, dispo)\n",
+        "        word_dict[(row_num, word_num)] = word_and_dispo\n",
+        "\n",
+        "    return word_dict\n",
+        "\n",
+        "\n",
+        "\n",
+        "  \n"
       ],
-      "execution_count": 136,
-      "outputs": [
-        {
-          "output_type": "stream",
-          "text": [
-            "['sHe', 'always', 'the', 'woman.']\n",
-            "['have', 'seldom', 'heard', 'him', 'mention', 'her', 'under', 'any', 'other', 'name.']\n"
-          ],
-          "name": "stdout"
-        }
-      ]
+      "execution_count": 0,
+      "outputs": []
     },
     {
-      "cell_type": "markdown",
+      "cell_type": "code",
       "metadata": {
-        "id": "mcNvxG1gIZIK",
-        "colab_type": "text"
+        "id": "gZNTvR87aGu1",
+        "colab_type": "code",
+        "colab": {}
       },
       "source": [
-        "**Task2 - Pars input text**:\n",
+        "text1 = ['To Sherlock1 Holmes she* is always the woman.', 'I have seldom heard him mention her under any other name.']\n",
+        "text2=rowparser(text1)\n",
+        "print(text2)\n",
+        "# OOP (object oriented programing)\n",
+        "# class, attribute, method, instance, object,  param\n",
         "\n",
+        "class Table:\n",
+        "    def __init__(self, fields): #initialize the class\n",
+        "        self.fields = fields\n",
+        "        self.n_fields = len(fields)\n",
+        "        self.records = []\n",
+        "        self.n_records = 0\n",
         "\n",
-        "1.   Use lower() and split() functions in order to insert the words into list and separate\n",
-        "2.   Input: text1 (dictionary of strings)\n",
-        "3.   Output: text2 (dictionary of key is tuple of line # and word # and values are words (keep both clean and dirty words but mark them)\n",
+        "# ‘Init’ it the constructor of the class. Creates an instance of the class Instance\n",
+        "# Object has methods and has attributes\n",
         "\n",
+        "class Student:\n",
+        "    def __init__(self, name, id_number, grades={}):\n",
+        "    # or def __init__(self, name, id_number, grades=dict()):\n",
+        "        self.name = name\n",
+        "        self.id_number = id_number\n",
+        "        self.grades = grades\n",
+        "s1 = Student('Yosi', 1, {'Math':[92,99]})\n",
+        "s2 = Student('Dor', 1, {'Math':[88,30]})\n",
+        " \n",
+        "print(s1)\n",
+        "print(s1.grades)\n",
         "\n",
-        "\n",
-        "\n",
-        "\n",
-        "\n",
-        "\n"
-      ]
+        "# Methods:\n",
+        "class Table:\n",
+        "    def __init__(self, fields):\n",
+        "        self.fields = fields\n",
+        "        self.n_fields = len(fields)\n",
+        "        self.records = []\n",
+        "        self.n_records = 0\n",
+        "    \n",
+        "    def add_record(self, rec):\n",
+        "        self.records.append(rec)\n",
+        "        self.n_records += 1\n",
+        " \n",
+        "    def took_test (self, subject, grade):\n",
+        "        self.grade[subject].append(grade)"
+      ],
+      "execution_count": 0,
+      "outputs": []
     }
   ]
 }
